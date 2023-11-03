@@ -1,31 +1,12 @@
 <script setup>
-import Header from './components/Header.vue'
-import Brand from './components/Brand.vue'
-import Advantages from './components/Advantages.vue'
-import Ceramics from './components/Ceramics.vue'
-import Products from './components/Products.vue'
-import Subscription from './components/Subscription.vue'
-import BrandAbout from './components/Brand-about.vue'
-import Footer from './components/Footer.vue'
+import { RouterView } from 'vue-router'
+import Main from './Main.vue'
 </script>
 
 <template>
-  <Header>
-  </Header>
-  <Brand>
-  </Brand>
-  <Advantages>
-  </Advantages>
-  <Ceramics>
-  </Ceramics>
-  <Products>
-  </Products>
-  <Subscription>
-  </Subscription>
-  <BrandAbout>
-  </BrandAbout>
-  <Footer>
-  </Footer>
+ <Main>
+  <RouterView></RouterView>
+ </Main>
 </template>
 
 <style lang="scss">
