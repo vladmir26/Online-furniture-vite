@@ -1,18 +1,32 @@
 <script setup>
+import { ref } from 'vue';
+
+const isActiveSearch = ref(false);
+const isActiveMenu = ref(false);
+
+const addSearch = () => {
+  isActiveSearch.value = !isActiveSearch.value
+  isActiveMenu.value = false;
+}
+
+const addMenu = () => {
+  isActiveMenu.value = !isActiveMenu.value
+  isActiveSearch.value = false;
+}
 </script>
 
 <template>
- <header id="header">
+ <header id="header" :class="{'active-search': isActiveSearch, 'active-menu': isActiveMenu}">
     <div class="wrapper container">
         <div class="wrapper__search-hamburger">
-          <a class="link-icons wrapper__search-link js-search-link" href=""> 
+          <a class="link-icons wrapper__search-link js-search-link" href="#" @click.prevent="addSearch"> 
             <svg class="wrapper__search" width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="16" height="16" fill="white" style="mix-blend-mode:multiply"></rect>
               <path d="M14.5 13.7931L10.7239 10.017C11.6313 8.9277 12.0838 7.5305 11.9872 6.11608C11.8907 4.70165 11.2525 3.37891 10.2055 2.423C9.15855 1.4671 7.78335 0.951637 6.366 0.983845C4.94865 1.01605 3.59828 1.59345 2.59581 2.59593C1.59333 3.5984 1.01593 4.94877 0.983723 6.36612C0.951515 7.78347 1.46698 9.15867 2.42288 10.2057C3.37879 11.2526 4.70153 11.8908 6.11596 11.9873C7.53038 12.0839 8.92758 11.6314 10.0169 10.7241L13.7929 14.5001L14.5 13.7931ZM2 6.50012C2 5.6101 2.26392 4.74007 2.75838 4.00005C3.25285 3.26003 3.95565 2.68325 4.77792 2.34266C5.60019 2.00207 6.50499 1.91295 7.3779 2.08658C8.25082 2.26022 9.05264 2.6888 9.68198 3.31814C10.3113 3.94747 10.7399 4.7493 10.9135 5.62221C11.0872 6.49513 10.998 7.39993 10.6575 8.22219C10.3169 9.04446 9.74008 9.74726 9.00006 10.2417C8.26004 10.7362 7.39001 11.0001 6.5 11.0001C5.30693 10.9988 4.1631 10.5243 3.31948 9.68064C2.47585 8.83701 2.00132 7.69319 2 6.50012Z" fill="currentColor"></path>
             </svg>
             <span class="close-form js-close-form">&#10006;</span>
           </a>
-          <a class="link-icons wrapper__hamburger-link js-hamburger-link" href="">
+          <a class="link-icons wrapper__hamburger-link js-hamburger-link" href="#" @click.prevent="addMenu">
             <svg class="wrapper__hamburger" width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="16" height="16" fill="white" style="mix-blend-mode:multiply"></rect>
                 <path d="M14 3H2V4H14V3Z" fill="#2A254B"></path>
@@ -22,7 +36,7 @@
             </svg>
             <span class="close-menu js-close-menu">&#10006;</span></a></div>
         <p class="wrapper__title"> 
-          <a class="wrapper__title-link" href="http://localhost:3000/">Avion</a></p>
+          <router-link class="wrapper__title-link" to="/">Avion</router-link></p>
         <div class="wrapper__icons">
             <div id="product-count"></div>
             <a class="link-icons wrapper__user-link" href="#"> 
@@ -36,7 +50,7 @@
     </div>
     <form class="wrapper__form js-form" action="">
       <input class="js-input" placeholder="Search here" type="search" />
-      <button class="js-button" type="submit">Search</button>
+      <button class="js-button" type="button">Search</button>
     </form>
     <ul class="menu js-menu">
         <li class="menu__item"> <a class="menu__link" href="#">Plant pots</a></li>
@@ -50,9 +64,9 @@
 </header>
 </template>
 
-<style scoped lang="scss">
-@import "../variables.scss";
-@import "../main.scss";
+<style lang="scss">
+@import '../variables.scss';
+@import '../main.scss';
 .header {
   padding-top: 40px;
   transition: padding-top 2s;
@@ -154,7 +168,7 @@
 .wrapper__form {
   display: none;
 }
-
+.active-search,
 .js-header--show-search {
   .wrapper__search {
     display: none;
@@ -254,7 +268,7 @@
   .wrapper::after {
     display: none;
   }
-
+  .active-search,
   .js-header--show-search {
     .wrapper__search {
       display: none;
@@ -308,7 +322,7 @@
       padding: 0;
     }
   }
-
+  .active-menu,
   .js-header--show-menu {
     .wrapper__hamburger {
       display: none;

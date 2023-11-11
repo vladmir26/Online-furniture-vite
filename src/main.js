@@ -1,26 +1,16 @@
 import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import router  from './router';
 import './variables.scss'
 import App from './App.vue'
-import Main from './Main.vue'
-import Catalog from './Catalog.vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faSpinner)
 
-const router = createRouter({
-    routes: [{
-      path: '/',
-      name: 'home',
-      component: Main
-    },
-    {
-    path: '/catalog',
-    name: 'catalog',
-    component: Catalog
-    }],
-    history: createWebHistory()
-  })
+const app = createApp(App) 
 
-  createApp(App).mount('#app')
-  createApp(App).use(router)
-
+app.use(router)
+app.mount('#app')
+app.component("font-awesome-icon", FontAwesomeIcon)
   

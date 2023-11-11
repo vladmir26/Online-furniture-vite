@@ -8,7 +8,7 @@
       <div class="brand__left-content"> 
         <h1 class="brand__heading"> The furniture brand for the future, with timeless designs</h1>
         <div class="brand__bottom-wrapper">
-          <a class="brand__button-link" href="#">View collection</a>
+          <router-link class="brand__button-link" :to="{ name: 'catalog' }">View collection</router-link>
           <p class="brand__text">
             A new era in eco friendly furniture with Avelon, the French luxury retail brandwith nice fonts, tasteful colors and a beautiful way to display things digitally 
             using modern web technologies.

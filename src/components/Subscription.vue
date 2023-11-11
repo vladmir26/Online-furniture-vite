@@ -1,4 +1,17 @@
 <script setup>
+import { ref } from 'vue';
+
+const isLoading = ref(false);
+const showConfirmation = ref(false);
+
+const submitForm = () => {
+  isLoading.value = true;
+
+  setTimeout(() => {
+    isLoading.value = false;
+    showConfirmation.value = true;
+  }, 10000);
+}
 </script>
 
 <template>
@@ -9,9 +22,13 @@
               <h2 class="subscription__heading">Join the club and get the benefits</h2>
               <p class="subscription__text">Sign up for our newsletter and receive exclusive offers on new ranges, sales, pop up stores and more</p>
             </div>
-            <form class="subscription__form js-subscription-form" action="">
+            <form class="subscription__form" @submit.prevent="submitForm">
               <input class="subscription__input" type="email" placeholder="your@email.com" required="required">
-              <button class="subscription__button js-subscription-button" id="button" type="submit">Sign up</button>
+              <button class="subscription__button" id="button" type="submit">
+                <font-awesome-icon class="subscription__icon" icon="fa fa-spinner fa-spin" v-if="isLoading" spin/>
+                <span v-else>Sign up</span>
+              </button>
+              <div v-if="showConfirmation" class="window">Спасибо за заявку</div>
             </form>
           </div>
         </div>
@@ -67,6 +84,11 @@
     background-color: $background-primary;
     border: $background-primary;
   }
+
+  &__icon {
+    color: #fff;
+  }
+
 }
 
 @media screen and (max-width: 767px) {

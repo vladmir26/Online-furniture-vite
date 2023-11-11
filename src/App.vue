@@ -1,17 +1,18 @@
 <script setup>
-import { RouterView } from 'vue-router'
-import Main from './Main.vue'
 </script>
 
 <template>
- <Main>
-  <RouterView></RouterView>
- </Main>
+  <router-view></router-view>
 </template>
 
 <style lang="scss">
 @import "../node_modules/scss-reset/reset";
 @import "./variables.scss";
+@import "./main.scss";
+html {
+  height: 100%;
+  min-height: 100%;
+}
 body {
   display: flex;
   flex-direction: column;
