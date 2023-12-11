@@ -8,7 +8,11 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSpinner)
 
-createApp(App).use(router)
-createApp(App).mount('#app')
-createApp(App).component("font-awesome-icon", FontAwesomeIcon)
+
+const app = createApp(App) 
+
+app.use(router)
+app.mount('#app')
+app.component("font-awesome-icon", FontAwesomeIcon)
+
   
