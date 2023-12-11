@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import Catalog from "./pages/Catalog.vue"
 import Main from "./pages/Main.vue";
 
