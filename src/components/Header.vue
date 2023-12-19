@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import ProductCount from '../components/Product-count.vue'
 
 const isActiveSearch = ref(false);
 const isActiveMenu = ref(false);
@@ -38,7 +39,7 @@ const addMenu = () => {
         <p class="wrapper__title"> 
           <router-link class="wrapper__title-link" to="/">Avion</router-link></p>
         <div class="wrapper__icons">
-            <div id="product-count"></div>
+            <ProductCount></ProductCount>
             <a class="link-icons wrapper__user-link" href="#"> 
               <svg class="wrapper__user" width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="16" height="16" fill="white" style="mix-blend-mode:multiply"></rect>

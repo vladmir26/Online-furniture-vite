@@ -6,20 +6,38 @@
         <div class="container__white-wrapper">
           <h2 class="ceramics__heading">New ceramics</h2>
           <ul class="ceramics__list">
-            <li class="ceramics__item"><a class="ceramics__link" href="markup/pages/product.html"><img class="ceramics__image" src="../img/content-image/image-first.png" alt="image-first">
+            <li class="ceramics__item">
+              <router-link class="ceramics__link" :to="{ name: 'product' }">
+                <img class="ceramics__image" src="../img/content-image/image-first.png" alt="image-first">
                 <h3 class="ceramics__title">The Dandy chair</h3>
-                <p class="ceramics__text">£250</p></a></li>
-            <li class="ceramics__item"><a class="ceramics__link" href="#"><img class="ceramics__image" src="../img/content-image/image-second.png" alt="image-second">
+                <p class="ceramics__text">£250</p>
+              </router-link>
+            </li>
+            <li class="ceramics__item">
+              <a class="ceramics__link" href="#">
+                <img class="ceramics__image" src="../img/content-image/image-second.png" alt="image-second">
                 <h3 class="ceramics__title">Rustic Vase Set</h3>
-                <p class="ceramics__text">£155</p></a></li>
-            <li class="ceramics__item"><a class="ceramics__link" href="#"><img class="ceramics__image" src="../img/content-image/image-third.png" alt="image-third">
+                <p class="ceramics__text">£155</p>
+              </a>
+            </li>
+            <li class="ceramics__item">
+              <a class="ceramics__link" href="#">
+                <img class="ceramics__image" src="../img/content-image/image-third.png" alt="image-third">
                 <h3 class="ceramics__title">The Silky Vase</h3>
-                <p class="ceramics__text">£125</p></a></li>
-            <li class="ceramics__item"><a class="ceramics__link" href="#"><img class="ceramics__image" src="../img/content-image/image-fourth.png" alt="image-fourth">
+                <p class="ceramics__text">£125</p>
+              </a>
+            </li>
+            <li class="ceramics__item">
+              <a class="ceramics__link" href="#">
+                <img class="ceramics__image" src="../img/content-image/image-fourth.png" alt="image-fourth">
                 <h3 class="ceramics__title">The Lucy Lamp</h3>
-                <p class="ceramics__text">£399</p></a></li>
+                <p class="ceramics__text">£399</p>
+              </a>
+            </li>
           </ul>
-          <div class="ceramics__button-link-wrapper"><a class="ceramics__button-link" href="#">View collection</a></div>
+          <div class="ceramics__button-link-wrapper">
+            <a class="ceramics__button-link" href="#">View collection</a>
+          </div>
         </div>
       </section>
 </template>
