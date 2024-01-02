@@ -5,7 +5,7 @@
       href="#"
     >
       <div
-        v-if="countVisible"
+        v-if="isCountVisible"
         :class="{'wrapper__product-count': true,
                  'wrapper__product-count-active-animation': isActiveAnimation }"
       >
@@ -29,19 +29,20 @@
   
   <script>
   import { onMounted } from 'vue';
-  import { mapStores } from 'pinia';
+  import { storeToRefs } from 'pinia';
   import { useCountStore } from '../store';
   
   export default {
     setup() {
-      const { countVisible, countAdd, isActiveAnimation, addCountLocalStorage } = mapStores(useCountStore);
+      const counterStore = useCountStore()
+      const { isCountVisible, countAdd, isActiveAnimation, addCountLocalStorage } = storeToRefs(useCountStore());
   
       onMounted(() => {
-        addCountLocalStorage();
+        counterStore.addCountLocalStorage();
       });
   
       return {
-        countVisible,
+        isCountVisible,
         countAdd,
         isActiveAnimation,
         addCountLocalStorage

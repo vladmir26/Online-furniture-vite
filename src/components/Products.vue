@@ -1,35 +1,40 @@
 <script setup>
+const { headingProducts, textButton } = defineProps(['headingProducts', 'textButton'])
+import { ref } from 'vue'
+const listProducts = ref([
+  {
+    image: '../img/content-image/image-fifth.png',
+    title: 'The Poplar suede sofa',
+    price: '£980'
+  },
+  {
+    image: `../img/content-image/image-first.png`,
+    title: 'The Dandy chair',
+    price: '£250'
+  },
+  {
+    image: '../img/content-image/image-first.png',
+    title: 'The Dandy chair',
+    price: '£250'
+  }
+  ])
 </script>
 
 <template>
 <section class="products container">
   <div class="container__white-wrapper">
-    <h2 class="products__heading">Our popular products</h2>
+    <h2 class="products__heading">{{ headingProducts }}</h2>
     <ul class="products__list">
-      <li class="products__item products__item--wide">
+      <li v-for="(item, index) in listProducts" :key="index" class="products__item products__item--wide">
         <a class="products__link" href="#">
-          <img class="products__image products__image--wide" src="../img/content-image/image-fifth.png" alt="image-fifth">
-          <h3 class="products__title">The Poplar suede sofa</h3>
-          <p class="products__text">£980</p>
-        </a>
-      </li>
-      <li class="products__item">
-        <a class="products__link" href="#"> 
-          <img class="products__image" src="../img/content-image/image-first.png" alt="image-first">
-          <h3 class="products__title">The Dandy chair</h3>
-          <p class="products__text">£250</p>
-        </a>
-      </li>
-      <li class="products__item">
-        <a class="products__link" href="#">
-          <img class="products__image" src="../img/content-image/image-sixth.png" alt="image-sixth">
-          <h3 class="products__title">The Dandy chair</h3>
-          <p class="products__text">£250</p>
+          <img :class="{ products__image, 'products__image--wide': index === 0 }" :src="item.image" alt="image-fifth">
+          <h3 class="products__title">{{ item.title }}</h3>
+          <p class="products__text">{{ item.price }}</p>
         </a>
       </li>
     </ul>
     <div class="products__button-link-wrapper">
-        <a class="products__button-link" href="#">View collection</a>
+        <a class="products__button-link" href="#">{{ textButton }}</a>
     </div>
     </div>
 </section>

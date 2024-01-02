@@ -7,6 +7,10 @@ import Products from '../components/Products.vue'
 import Subscription from '../components/Subscription.vue'
 import BrandAbout from '../components/Brand-about.vue'
 import Footer from '../components/Footer.vue'
+import { ref } from 'vue'
+
+
+const isFlag = ref(true);
 </script>
 
 <template>
@@ -18,7 +22,8 @@ import Footer from '../components/Footer.vue'
   </Advantages>
   <Ceramics>
   </Ceramics>
-  <Products>
+  <Products :headingProducts="isFlag ? 'Our popular products' : 'You might also love these'"
+            :textButton="isFlag ? 'View collection' : 'See collection'">
   </Products>
   <Subscription>
   </Subscription>
