@@ -1,23 +1,25 @@
 <script setup>
 const { headingProducts, textButton } = defineProps(['headingProducts', 'textButton'])
 import { ref } from 'vue'
-const listProducts = ref([
+
+  const listProducts = ref([
   {
-    image: '../img/content-image/image-fifth.png',
+    image: '/src/img/content-image/image-fifth.png',
     title: 'The Poplar suede sofa',
     price: '£980'
   },
   {
-    image: `../img/content-image/image-first.png`,
+    image: '/src/img/content-image/image-first.png',
     title: 'The Dandy chair',
     price: '£250'
   },
   {
-    image: '../img/content-image/image-first.png',
+    image: '/src/img/content-image/image-sixth.png',
     title: 'The Dandy chair',
     price: '£250'
   }
   ])
+
 </script>
 
 <template>
@@ -25,9 +27,9 @@ const listProducts = ref([
   <div class="container__white-wrapper">
     <h2 class="products__heading">{{ headingProducts }}</h2>
     <ul class="products__list">
-      <li v-for="(item, index) in listProducts" :key="index" class="products__item products__item--wide">
+      <li v-for="(item, index) in listProducts" :key="index" class="products__item" :class="{'products__item': true,'products__item--wide': index === 0 }">
         <a class="products__link" href="#">
-          <img :class="{ products__image, 'products__image--wide': index === 0 }" :src="item.image" alt="image-fifth">
+          <img сlass="products__image" :class="{'products__image' :true, 'products__image--wide': index === 0 }" :src="item.image" alt="image-fifth">
           <h3 class="products__title">{{ item.title }}</h3>
           <p class="products__text">{{ item.price }}</p>
         </a>

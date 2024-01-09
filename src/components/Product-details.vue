@@ -57,7 +57,7 @@
 </template>
   
 <script>
- import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { mapStores } from 'pinia';
 import { useCountStore } from '../store';
 

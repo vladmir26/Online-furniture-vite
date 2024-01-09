@@ -10,7 +10,8 @@ import Footer from '../components/Footer.vue'
 import { ref } from 'vue'
 
 
-const isFlag = ref(true);
+const isFlagProducts = ref(true);
+const isFlagAdvantages = ref(true)
 </script>
 
 <template>
@@ -18,12 +19,13 @@ const isFlag = ref(true);
   </Header>
   <Brand>
   </Brand>
-  <Advantages>
+  <Advantages :cssClassLi="isFlagAdvantages ? 'advantages__item' : 'advantages__item-grey'"
+              :isFlagDiv = false>
   </Advantages>
   <Ceramics>
   </Ceramics>
-  <Products :headingProducts="isFlag ? 'Our popular products' : 'You might also love these'"
-            :textButton="isFlag ? 'View collection' : 'See collection'">
+  <Products :headingProducts="isFlagProducts ? 'Our popular products' : 'You might also love these'"
+            :textButton="isFlagProducts ? 'View collection' : 'See collection'">
   </Products>
   <Subscription>
   </Subscription>
