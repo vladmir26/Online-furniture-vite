@@ -2,11 +2,11 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" src="../img/content-image/image-fourteen.png" alt="image-fourteen">
+        <img class="product-details__image" :src="productsMock.images" alt="image-fourteen">
       </div>
       <div class="product-details__description-inner-wrapper">
-        <h1 class="product-details__heading">The Dandy Chair</h1>
-        <p class="product-details__price-text">£250</p>
+        <h1 class="product-details__heading">{{ productsMock.title }}</h1>
+        <p class="product-details__price-text">£{{ productsMock.price }}</p>
         <h2 class="product-details__title">Product description</h2>
         <p class="product-details__description-text">
           A timeless design, with premium materials features as one of our most popular and iconic pieces.
@@ -57,12 +57,18 @@
 </template>
   
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { mapStores } from 'pinia';
 import { useCountStore } from '../store';
+import { useRoute } from 'vue-router';
+import productsData from '../mock/products.json'
+
+
 
 export default {
   setup() {
+    const route = useRoute();
+    const productsMock = ref(productsData)
     const count = ref(1);
     const isModalActive = ref(false);
     const countStore = useCountStore();
@@ -75,9 +81,17 @@ export default {
     const closeDialog = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.close(); };
 
     const handleShowModal = () => { };
-      onMounted(() => { const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal; });
+      onMounted(() => { 
+        const productId = route.params.id;
+        productsMock.value = productsData.find(product => product.id === Number(productId));
+        const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal; 
+      });
+
+      watch(() => route.params.id, (newProductId) => {
+        productsMock.value = products.find(product => product.id === Number(newProductId));
+    });
       
-      return { count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
+      return { productsMock, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
 
    },
 }

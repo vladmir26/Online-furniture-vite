@@ -7,7 +7,7 @@ import VueImages from 'vite-plugin-vue-images';
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? './' : '/',
   plugins: [vue(),VueImages()],
-  resolve: {
+  resolve: { 
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }

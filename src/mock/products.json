@@ -1,44 +1,37 @@
-{
-  "products": [
-      {
+[
+    {
           "id": 1,
           "title": "The Dandy chair",
-          "price": 549,
+          "price": 250,
           "brand": "Robert Smith",
           "category": "Furniture",
-          "images": [
-              "https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80"
-          ]
+          "images": "/src/img/content-image/image-first.png"
       },
       {
           "id": 2,
           "title": "Rustic Vase Set",
-          "price": 899,
+          "price": 155,
           "brand": "Biggie Smalls",
           "category": "Homeware",
-          "images": [
-              "https://images.unsplash.com/photo-1525375542506-11394c6c5cf8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-          ]
+          "images": "/src/img/content-image/image-second.png"
       },
       {
           "id": 3,
-          "title": "The Lucy Lamp",
-          "price": 1249,
-          "brand": "Robert Smith",
-          "category": "Light fittings",
-          "images": [
-              "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-          ]
-      },
-      {
-          "id": 4,
           "title": "The Silky Vase",
+          "price": 125,
           "brand": "Thom Yorke",
           "category": "Accessories",
-          "images": [
-              "https://images.unsplash.com/photo-1529136490842-e2da7a4c7b74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=942&q=80"
-          ]
+          "images": "/src/img/content-image/image-third.png"
       },
+      {
+        "id": 4,
+        "title": "The Lucy Lamp",
+        "price": 399,
+        "brand": "Robert Smith",
+        "category": "Light fittings",
+        "images": "/src/img/content-image/image-fourth.png"
+
+    },
       {
           "id": 5,
           "title": "The Poplar suede sofa",
@@ -158,8 +151,5 @@
               "https://images.unsplash.com/photo-1594224457860-23bdb45f8e3d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80"
           ]
       }
-  ],
-  "total": 100,
-  "skip": 0,
-  "limit": 30
-}
+
+]

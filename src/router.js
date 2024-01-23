@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import Catalog from "./pages/Catalog.vue"
 import Product from "./pages/Product.vue"
 import Main from "./pages/Main.vue";
@@ -15,14 +15,15 @@ const routes = [
         component: Catalog 
     },
     {
-        path: '/product',
+        path: '/product/:id',
         name: 'product',
-        component: Product
+        component: Product,
+        props: true,
     }
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes,
 }
 );

@@ -1,38 +1,22 @@
 <script setup>
+import productsData from '../mock/products.json'
+import { ref } from 'vue';
+const products = ref(productsData);
 </script>
-
 <template>
 <section class="ceramics container">
         <div class="container__white-wrapper">
           <h2 class="ceramics__heading">New ceramics</h2>
           <ul class="ceramics__list">
-            <li class="ceramics__item">
-              <router-link class="ceramics__link" :to="{ name: 'product' }">
-                <img class="ceramics__image" src="../img/content-image/image-first.png" alt="image-first">
-                <h3 class="ceramics__title">The Dandy chair</h3>
-                <p class="ceramics__text">£250</p>
+            <li
+              v-for="(product, index) in products.slice(0, 4)" :key="(product.id, index)" 
+              class="ceramics__item"
+              >
+              <router-link class="ceramics__link" :to="{ name: 'product', params: { id: product.id } }">
+                <img class="ceramics__image" :src="product.images" alt="image-first">
+                <h3 class="ceramics__title">{{ product.title }}</h3>
+                <p class="ceramics__text">£{{  product.price }}</p>
               </router-link>
-            </li>
-            <li class="ceramics__item">
-              <a class="ceramics__link" href="#">
-                <img class="ceramics__image" src="../img/content-image/image-second.png" alt="image-second">
-                <h3 class="ceramics__title">Rustic Vase Set</h3>
-                <p class="ceramics__text">£155</p>
-              </a>
-            </li>
-            <li class="ceramics__item">
-              <a class="ceramics__link" href="#">
-                <img class="ceramics__image" src="../img/content-image/image-third.png" alt="image-third">
-                <h3 class="ceramics__title">The Silky Vase</h3>
-                <p class="ceramics__text">£125</p>
-              </a>
-            </li>
-            <li class="ceramics__item">
-              <a class="ceramics__link" href="#">
-                <img class="ceramics__image" src="../img/content-image/image-fourth.png" alt="image-fourth">
-                <h3 class="ceramics__title">The Lucy Lamp</h3>
-                <p class="ceramics__text">£399</p>
-              </a>
             </li>
           </ul>
           <div class="ceramics__button-link-wrapper">
