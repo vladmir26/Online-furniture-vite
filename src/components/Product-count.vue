@@ -28,6 +28,7 @@
   </template>
   
   <script>
+  //@ts-nocheck
   import { onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useCountStore } from '../store';

@@ -1,4 +1,5 @@
 <script setup>
+//@ts-nocheck
 import productsData from '../mock/products.json'
 import { ref } from 'vue';
 const products = ref(productsData);

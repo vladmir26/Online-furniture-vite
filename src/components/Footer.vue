@@ -1,4 +1,5 @@
 <script setup>
+//@ts-nocheck
 import { ref } from 'vue';
 
 const isLoading = ref(false);

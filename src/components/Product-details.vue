@@ -57,6 +57,7 @@
 </template>
   
 <script>
+//@ts-nocheck
 import { ref, computed, onMounted, watch } from 'vue';
 import { mapStores } from 'pinia';
 import { useCountStore } from '../store';

@@ -1,4 +1,5 @@
 <script setup>
+//@ts-nocheck
 import productsData from '../mock/products.json'
 import { addMockDataToProduct } from '../hint/match';
 import { ref, computed, onMounted } from 'vue';

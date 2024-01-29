@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "strict": true,
+      "jsx": "preserve",
+      "esModuleInterop": true,
+      "lib": ["dom", "esnext"],
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "allowJs": true,
+      "checkJs": true,
+      "noEmit": true,
+      "declaration": true,
+      "allowSyntheticDefaultImports": true,
+      "importHelpers": true,
+      "isolatedModules": true,
+      "types": ["vite/client", "vue"]
+    },
+    "exclude": ["node_modules"]
+  }
