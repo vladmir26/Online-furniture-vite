@@ -15,10 +15,11 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.5",
+    "@vue/compiler-sfc": "^3.4.15",
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
     "scss-reset": "^1.4.2",
-    "vue": "^3.3.4",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

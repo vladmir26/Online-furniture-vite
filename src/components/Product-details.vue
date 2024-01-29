@@ -62,7 +62,7 @@ import { mapStores } from 'pinia';
 import { useCountStore } from '../store';
 import { useRoute } from 'vue-router';
 import productsData from '../mock/products.json'
-
+//import addMockDataToProduct from '../components/Catalog-products.vue'
 
 
 export default {
@@ -79,19 +79,28 @@ export default {
     const addMinus = () => { count.value -= 1; count.value = limitedCounter.value; };
     const addCart = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal(); countStore.addCount(count.value); countStore.animationActive('6000'); };
     const closeDialog = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.close(); };
-
+    //const productId = route.params.id;
+    /*const getProduct = (productId) => {
+      const idParams = productId.split('-');
+          if (idParams.length === 1) {
+            return productsMock.value = productsData.find(product => product.id === Number(route.params.id));
+          } else {
+            return addMockDataToProduct();
+          }
+    }*/
     const handleShowModal = () => { };
       onMounted(() => { 
-        const productId = route.params.id;
-        productsMock.value = productsData.find(product => product.id === Number(productId));
+        const productData = route.params.id //getProduct(route.params.id);
+        productsMock.value = productsData.find(product => product.id === Number(productData));
         const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal; 
       });
 
       watch(() => route.params.id, (newProductId) => {
-        productsMock.value = products.find(product => product.id === Number(newProductId));
+        productsMock.value = productsData.find(product => product.id === Number(newProductId));
     });
+
       
-      return { productsMock, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
+      return { productsMock, productsData, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
 
    },
 }

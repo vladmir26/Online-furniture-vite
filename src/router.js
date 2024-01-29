@@ -10,7 +10,7 @@ const routes = [
         component: Main
     },
     { 
-        path: '/catalog', 
+        path: '/catalog/', 
         name: 'catalog', 
         component: Catalog 
     },
@@ -18,8 +18,15 @@ const routes = [
         path: '/product/:id',
         name: 'product',
         component: Product,
-        props: true,
-    }
+        props: true
+    },
+
+    {
+      path: '/product/mock:id',
+      name: 'product-mock',
+      component: Product,
+      props: true
+    },
 ];
 
 const router = createRouter({

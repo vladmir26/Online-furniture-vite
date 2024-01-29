@@ -1,5 +1,6 @@
 <script setup>
 import productsData from '../mock/products.json'
+import { addMockDataToProduct } from '../hint/match';
 import { ref, computed, onMounted } from 'vue';
 
 const productsMock = ref(productsData);
@@ -127,27 +128,8 @@ const loadingProducts = () => {
     .catch(console.log);
 };
 
-function addMockDataToProduct(mockProduct) {
-  
-  mockProduct.value.forEach(product => {
-    console.log('++++++')
-    const productTemplate = {
-      "id": products.value.length,
-      "title": product.title,
-      "description": "",
-      "price": product.price,
-      "discountPercentage": 0,
-      "rating": 0,
-      "stock": 0,
-      "brand": product.brand,
-      "category": product.category,
-      "thumbnail": product.images,
-      "images": [ product.images,
-      ]
-    }
-    products.value.push(productTemplate)
-  })
-}
+addMockDataToProduct();
+
 
 onMounted(() => {
   fetch('https://dummyjson.com/products')
@@ -308,7 +290,7 @@ onMounted(() => {
           class="products-catalog__item"
         >
           <router-link
-            class="products-catalog__link" :to="{ name: 'product', params: { id: item.id } }"
+            class="products-catalog__link" :to="{ name: 'product', params: { id:`mock-${item.id}`} }"
           >
             <img
               class="products-catalog__image"
