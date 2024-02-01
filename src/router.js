@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
+//@ts-nocheck
+import { createRouter, createWebHistory } from 'vue-router'
 import Catalog from "./pages/Catalog.vue"
 import Product from "./pages/Product.vue"
 import Main from "./pages/Main.vue";
@@ -19,13 +20,6 @@ const routes = [
         name: 'product',
         component: Product,
         props: true
-    },
-
-    {
-      path: '/product/mock:id',
-      name: 'product-mock',
-      component: Product,
-      props: true
     },
 ];
 

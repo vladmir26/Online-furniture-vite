@@ -4,6 +4,10 @@ import productsData from '../mock/products.json'
 import { addMockDataToProduct } from '../hint/match';
 import { ref, computed, onMounted } from 'vue';
 
+
+
+
+const isDynamicRoute = ref(true);
 const productsMock = ref(productsData);
 
 const limit = ref(30);
@@ -121,6 +125,7 @@ const loadingProducts = () => {
       counter.value += 1;
       products.value = products.value.concat(res.products);
       createFilters();
+      console.log(products);
       isCategoriesScrollHidden.value = true;
       if (res.limit < limit.value) {
         isLoadMoreHidden.value = true;
@@ -129,7 +134,7 @@ const loadingProducts = () => {
     .catch(console.log);
 };
 
-addMockDataToProduct();
+//addMockDataToProduct();
 
 
 onMounted(() => {
@@ -139,10 +144,29 @@ onMounted(() => {
       products.value = res.products;
       //console.log(res);
       createFilters();
-      addMockDataToProduct(productsMock)
+      addMockDataToProduct(productsMock.value, products.value)
     })
     .catch(console.log);
 });
+
+const dynamicRouteApi = {
+  name: 'product',
+  params: { id: productsSorted.id }
+};
+
+const dynamicRouteMock = {
+  name: 'product',
+  params: { id: `mock-${productsSorted.id}` }
+};
+console.log();
+const updateRouteParams = () => {
+  if (productsSorted.id.value >= 30 && productsSorted.id.value <= 45) {
+    isDynamicRoute.value = true;
+  }
+  else {
+    isDynamicRoute.value = false;
+  }
+}
 </script>
 
 
@@ -287,11 +311,11 @@ onMounted(() => {
       <ul class="products-catalog__list">
         <li
           v-for="item in productsSorted"
-          :key="item"
+          :key="item.value"
           class="products-catalog__item"
         >
           <router-link
-            class="products-catalog__link" :to="{ name: 'product', params: { id:`mock-${item.id}`} }"
+            class="products-catalog__link"  :to="isDynamicRoute ? dynamicRouteMock : dynamicRouteApi"
           >
             <img
               class="products-catalog__image"

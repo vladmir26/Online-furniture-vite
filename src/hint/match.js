@@ -1,10 +1,10 @@
-
+//@ts-nocheck
 export function addMockDataToProduct(mockProduct, products) {
   
     mockProduct.forEach(product => {
       console.log('++++++')
       const productTemplate = {
-        "id": products.value.length,
+        "id": products.length,
         "title": product.title,
         "description": "",
         "price": product.price,
@@ -17,7 +17,7 @@ export function addMockDataToProduct(mockProduct, products) {
         "images": [ product.images,
         ]
       }
-      products.value.push(productTemplate)
+      products.push(productTemplate)
     })
   }
   

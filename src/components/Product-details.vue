@@ -2,11 +2,11 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" :src="productsMock.images" alt="image-fourteen">
+        <img class="product-details__image" :src="productItem.images" alt="image-fourteen">
       </div>
       <div class="product-details__description-inner-wrapper">
-        <h1 class="product-details__heading">{{ productsMock.title }}</h1>
-        <p class="product-details__price-text">£{{ productsMock.price }}</p>
+        <h1 class="product-details__heading">{{ productItem.title }}</h1>
+        <p class="product-details__price-text">£{{ productItem.price }}</p>
         <h2 class="product-details__title">Product description</h2>
         <p class="product-details__description-text">
           A timeless design, with premium materials features as one of our most popular and iconic pieces.
@@ -63,17 +63,17 @@ import { mapStores } from 'pinia';
 import { useCountStore } from '../store';
 import { useRoute } from 'vue-router';
 import productsData from '../mock/products.json'
-//import addMockDataToProduct from '../components/Catalog-products.vue'
+//import addMockDataToProduct from '../hint/match'
 
 
 export default {
   setup() {
     const route = useRoute();
-    const productsMock = ref(productsData)
+    //const productsMock = ref(productsData)
     const count = ref(1);
     const isModalActive = ref(false);
     const countStore = useCountStore();
-
+    const productItem = ref('');
     const limitedCounter = computed(() => Math.max(count.value, 1));
 
     const addPlus = () => { count.value += 1; };
@@ -81,27 +81,57 @@ export default {
     const addCart = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal(); countStore.addCount(count.value); countStore.animationActive('6000'); };
     const closeDialog = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.close(); };
     //const productId = route.params.id;
-    /*const getProduct = (productId) => {
+    const loadingProductItem = async (id) => {
+      return await fetch(`https://dummyjson.com/products/${id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+            return res;
+        })
+        .catch(console.log);
+    };
+    console.log(route.params);
+    const getProduct = async(productId) => {
       const idParams = productId.split('-');
+         console.log(productId);
           if (idParams.length === 1) {
-            return productsMock.value = productsData.find(product => product.id === Number(route.params.id));
+            return await loadingProductItem(idParams[0]).then(
+              (product) => { 
+                return {
+                    'image': product.images[0],
+                    'title': product.title,
+                    'price': product.price,
+                };
+              }
+            );
           } else {
-            return addMockDataToProduct();
+            const productDataItem = await productsData.find(product => product.id === Number(idParams[1]));
+        
+            return  {
+                    'image': productDataItem.images,
+                    'title': productDataItem.title,
+                    'price': productDataItem.price,
+                };
+          
           }
-    }*/
+    }
     const handleShowModal = () => { };
       onMounted(() => { 
-        const productData = route.params.id //getProduct(route.params.id);
-        productsMock.value = productsData.find(product => product.id === Number(productData));
-        const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal; 
+        getProduct(route.params.id).then((product) => {
+           productItem.value = product
+        });
+        const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal;
+        console.log(productItem.value);
       });
 
       watch(() => route.params.id, (newProductId) => {
-        productsMock.value = productsData.find(product => product.id === Number(newProductId));
+        productItem.value = getProduct(newProductId);
+        //productsMock.value = productsData.find(product => product.id === Number(newProductId));
+        console.log(productItem);
     });
 
       
-      return { productsMock, productsData, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
+      return { productItem, productsData, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
 
    },
 }
