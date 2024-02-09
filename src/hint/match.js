@@ -5,6 +5,7 @@ export function addMockDataToProduct(mockProduct, products) {
       console.log('++++++')
       const productTemplate = {
         "id": products.length,
+        "mock": true,
         "title": product.title,
         "description": "",
         "price": product.price,

@@ -7,7 +7,6 @@ import { ref, computed, onMounted } from 'vue';
 
 
 
-const isDynamicRoute = ref(true);
 const productsMock = ref(productsData);
 
 const limit = ref(30);
@@ -134,7 +133,6 @@ const loadingProducts = () => {
     .catch(console.log);
 };
 
-//addMockDataToProduct();
 
 
 onMounted(() => {
@@ -142,7 +140,6 @@ onMounted(() => {
     .then((res) => res.json())
     .then((res) => {
       products.value = res.products;
-      //console.log(res);
       createFilters();
       addMockDataToProduct(productsMock.value, products.value)
     })
@@ -158,14 +155,6 @@ const dynamicRouteMock = {
   name: 'product',
   params: { id: `mock-${productsSorted.value.id}` }
 };
-const updateRouteParams = () => {
-  if (productsSorted.value.id >= 30 && productsSorted.value.id <= 45) {
-    isDynamicRoute.value = true;
-  }
-  else {
-    isDynamicRoute.value = false;
-  }
-}
 console.log(productsSorted.value);
 </script>
 
@@ -315,8 +304,7 @@ console.log(productsSorted.value);
           class="products-catalog__item"
         >
           <router-link
-            @click="updateRouteParams"
-            class="products-catalog__link"  :to="isDynamicRoute ? dynamicRouteMock : dynamicRouteApi"
+            class="products-catalog__link"  :to="item.mock ? dynamicRouteMock : dynamicRouteApi"
           >
             <img
               class="products-catalog__image"
