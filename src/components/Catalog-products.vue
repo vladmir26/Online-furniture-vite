@@ -151,22 +151,22 @@ onMounted(() => {
 
 const dynamicRouteApi = {
   name: 'product',
-  params: { id: productsSorted.id }
+  params: { id: productsSorted.value.id }
 };
 
 const dynamicRouteMock = {
   name: 'product',
-  params: { id: `mock-${productsSorted.id}` }
+  params: { id: `mock-${productsSorted.value.id}` }
 };
-console.log();
 const updateRouteParams = () => {
-  if (productsSorted.id.value >= 30 && productsSorted.id.value <= 45) {
+  if (productsSorted.value.id >= 30 && productsSorted.value.id <= 45) {
     isDynamicRoute.value = true;
   }
   else {
     isDynamicRoute.value = false;
   }
 }
+console.log(productsSorted.value);
 </script>
 
 
@@ -315,6 +315,7 @@ const updateRouteParams = () => {
           class="products-catalog__item"
         >
           <router-link
+            @click="updateRouteParams"
             class="products-catalog__link"  :to="isDynamicRoute ? dynamicRouteMock : dynamicRouteApi"
           >
             <img
