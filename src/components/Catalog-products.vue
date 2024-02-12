@@ -145,17 +145,14 @@ onMounted(() => {
     })
     .catch(console.log);
 });
-
-const dynamicRouteApi = {
-  name: 'product',
-  params: { id: productsSorted.value.id }
-};
-
-const dynamicRouteMock = {
-  name: 'product',
-  params: { id: `mock-${productsSorted.value.id}` }
-};
-console.log(productsSorted.value);
+const setRouter = (product) => {
+  const prefix = (product.mock) ? 'mock-' : ''
+  return {
+    name: 'product',
+    params: {id: `${prefix}${product.id}`}
+  }
+}
+console.log(productsSorted);
 </script>
 
 
@@ -304,7 +301,7 @@ console.log(productsSorted.value);
           class="products-catalog__item"
         >
           <router-link
-            class="products-catalog__link"  :to="item.mock ? dynamicRouteMock : dynamicRouteApi"
+            class="products-catalog__link"  :to="setRouter(item)"
           >
             <img
               class="products-catalog__image"

@@ -2,7 +2,7 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" :src="productItem.images" alt="image-fourteen">
+        <img class="product-details__image" :src="productItem.image" alt="image-fourteen">
       </div>
       <div class="product-details__description-inner-wrapper">
         <h1 class="product-details__heading">{{ productItem.title }}</h1>
@@ -105,8 +105,8 @@ export default {
               }
             );
           } else {
-            const productDataItem = await productsData.find(product => product.id === Number(idParams[1]));
-        
+            const productDataItem = await productsData.find(product => product.id === Number(idParams[0]));
+            console.log(productDataItem);
             return  {
                     'image': productDataItem.images,
                     'title': productDataItem.title,
@@ -114,6 +114,7 @@ export default {
                 };
           
           }
+          
     }
     const handleShowModal = () => { };
       onMounted(() => { 
@@ -126,7 +127,6 @@ export default {
 
       watch(() => route.params.id, (newProductId) => {
         productItem.value = getProduct(newProductId);
-        //productsMock.value = productsData.find(product => product.id === Number(newProductId));
         console.log(productItem);
     });
 
