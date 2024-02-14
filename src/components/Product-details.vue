@@ -2,7 +2,7 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" :src="productItem.image" alt="image-fourteen">
+        <img class="product-details__image" :src="productItem.images" alt="image">
       </div>
       <div class="product-details__description-inner-wrapper">
         <h1 class="product-details__heading">{{ productItem.title }}</h1>
@@ -63,7 +63,7 @@ import { mapStores } from 'pinia';
 import { useCountStore } from '../store';
 import { useRoute } from 'vue-router';
 import productsData from '../mock/products.json'
-//import addMockDataToProduct from '../hint/match'
+
 
 
 export default {
@@ -105,9 +105,9 @@ export default {
               }
             );
           } else {
-            const productDataItem = await productsData.find(product => product.id === Number(idParams[0]));
+            const productDataItem = productsData.find(product => product.id === Number(idParams[1]));
             console.log(productDataItem);
-            return  {
+            return {
                     'image': productDataItem.images,
                     'title': productDataItem.title,
                     'price': productDataItem.price,

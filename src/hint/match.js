@@ -1,10 +1,15 @@
 //@ts-nocheck
+/**
+ * 
+ * @param {*} mockProduct 
+ * @param {*} products 
+ */
 export function addMockDataToProduct(mockProduct, products) {
   
     mockProduct.forEach(product => {
       console.log('++++++')
       const productTemplate = {
-        "id": products.length,
+        "id": product.id,
         "mock": true,
         "title": product.title,
         "description": "",
@@ -14,11 +19,9 @@ export function addMockDataToProduct(mockProduct, products) {
         "stock": 0,
         "brand": product.brand,
         "category": product.category,
-        "thumbnail": product.images,
-        "images": [ product.images,
-        ]
+        "thumbnail": "",
+        "images": [ product.images ],
       }
       products.push(productTemplate)
     })
   }
-  
