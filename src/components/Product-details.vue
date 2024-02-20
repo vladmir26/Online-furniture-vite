@@ -2,7 +2,7 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" :src="productItem.images" alt="image">
+        <img class="product-details__image" :src="productItem.image" alt="image">
       </div>
       <div class="product-details__description-inner-wrapper">
         <h1 class="product-details__heading">{{ productItem.title }}</h1>

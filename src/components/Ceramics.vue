@@ -2,6 +2,8 @@
 //@ts-nocheck
 import productsData from '../mock/products.json'
 import { ref } from 'vue';
+
+
 const products = ref(productsData);
 </script>
 <template>
@@ -13,7 +15,7 @@ const products = ref(productsData);
               v-for="(product, index) in products.slice(0, 4)" :key="(product.id, index)" 
               class="ceramics__item"
               >
-              <router-link class="ceramics__link" :to="{ name: 'product', params: { id: product.id } }">
+              <router-link class="ceramics__link" :to="{ name: 'product', params: { id: `mock-${product.id}` } }">
                 <img class="ceramics__image" :src="product.images" alt="image-first">
                 <h3 class="ceramics__title">{{ product.title }}</h3>
                 <p class="ceramics__text">£{{  product.price }}</p>

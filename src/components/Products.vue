@@ -1,25 +1,24 @@
 <script setup>
+//@ts-nocheck
 const { headingProducts, textButton } = defineProps(['headingProducts', 'textButton'])
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import productsData from '../mock/products.json'
 
-  const listProducts = ref([
-  {
-    image: '/src/img/content-image/image-fifth.png',
-    title: 'The Poplar suede sofa',
-    price: '£980'
-  },
-  {
-    image: '/src/img/content-image/image-first.png',
-    title: 'The Dandy chair',
-    price: '£250'
-  },
-  {
-    image: '/src/img/content-image/image-sixth.png',
-    title: 'The Dandy chair',
-    price: '£250'
-  }
-  ])
+const products = ref(productsData);
 
+
+const sortedProductsId = computed(() => {
+  const filtered = products.value.filter(item => [5, 8, 9].includes(item.id));
+  return filtered.sort((a, b) => {
+    if (a.id === 5) return -1;
+    if (b.id === 5) return 1;
+    if (a.id === 9) return -1;
+    if (b.id === 9) return 1;
+    if (a.id === 8) return -1;
+    if (b.id === 8) return 1;
+    return 0;
+  });
+});
 </script>
 
 <template>
@@ -27,12 +26,15 @@ import { ref } from 'vue'
   <div class="container__white-wrapper">
     <h2 class="products__heading">{{ headingProducts }}</h2>
     <ul class="products__list">
-      <li v-for="(item, index) in listProducts" :key="index" class="products__item" :class="{'products__item': true,'products__item--wide': index === 0 }">
-        <a class="products__link" href="#">
-          <img сlass="products__image" :class="{'products__image' :true, 'products__image--wide': index === 0 }" :src="item.image" alt="image-fifth">
+      <li v-for="(item, index) in sortedProductsId" :key="index" 
+          class="products__item" 
+          :class="{'products__item': true,'products__item--wide': index === 0 }"
+      >
+        <router-link class="products__link" :to="{ name: 'product', params: { id: `mock-${item.id}` } }">
+          <img сlass="products__image" :class="{'products__image' :true, 'products__image--wide': index === 0 }" :src="item.images" alt="image-fifth">
           <h3 class="products__title">{{ item.title }}</h3>
-          <p class="products__text">{{ item.price }}</p>
-        </a>
+          <p class="products__text">£{{ item.price }}</p>
+        </router-link>
       </li>
     </ul>
     <div class="products__button-link-wrapper">
