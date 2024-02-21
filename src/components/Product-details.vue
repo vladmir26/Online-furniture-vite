@@ -2,7 +2,7 @@
   <section class="product-details container js-product-details">
     <div class="product-details__wrapper container__grey-wrapper">
       <div class="product-details__image-inner-wrapper">
-        <img class="product-details__image" :src="productItem.images" alt="image">
+        <img class="product-details__image" :src="productItem.image" alt="image">
       </div>
       <div class="product-details__description-inner-wrapper">
         <h1 class="product-details__heading">{{ productItem.title }}</h1>
@@ -74,12 +74,34 @@ export default {
     const isModalActive = ref(false);
     const countStore = useCountStore();
     const productItem = ref('');
-    const limitedCounter = computed(() => Math.max(count.value, 1));
+    const limitedCounter = computed(() => Math.max(count.value, 1), {
+      onTrack(e) {
+        // срабатывает, когда count.value отслеживается как зависимость
+        debugger
+      },
+      onTrigger(e) {
+        // срабатывает при изменении значения count.value
+        debugger
+      }
+    });
 
     const addPlus = () => { count.value += 1; };
-    const addMinus = () => { count.value -= 1; count.value = limitedCounter.value; };
-    const addCart = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal(); countStore.addCount(count.value); countStore.animationActive('6000'); };
-    const closeDialog = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.close(); };
+    const addMinus = () => { 
+      count.value -= 1; 
+      count.value = limitedCounter.value;
+    };
+    const addCart = () => { 
+      const dialogBox = document.getElementById('dialogBox'); 
+      dialogBox.showModal(); 
+      countStore.addCount(count.value); 
+      countStore.animationActive('6000'); 
+  };
+
+    const closeDialog = () => { 
+      const dialogBox = document.getElementById('dialogBox'); 
+      dialogBox.close(); 
+    };
+
     //const productId = route.params.id;
     const loadingProductItem = async (id) => {
       return await fetch(`https://dummyjson.com/products/${id}`)
@@ -90,10 +112,11 @@ export default {
         })
         .catch(console.log);
     };
-    console.log(route.params);
+    
+
     const getProduct = async(productId) => {
       const idParams = productId.split('-');
-         console.log(productId);
+         console.log(idParams);
           if (idParams.length === 1) {
             return await loadingProductItem(idParams[0]).then(
               (product) => { 
@@ -116,22 +139,25 @@ export default {
           }
           
     }
-    const handleShowModal = () => { };
-      onMounted(() => { 
-        getProduct(route.params.id).then((product) => {
-           productItem.value = product
-        });
-        const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal;
-        console.log(productItem.value);
-      });
 
-      watch(() => route.params.id, (newProductId) => {
+
+    const handleShowModal = () => { };
+
+    onMounted(() => { 
+      getProduct(route.params.id).then((product) => {
+          productItem.value = product
+      });
+      const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal;
+      console.log(productItem.value);
+    });
+
+    watch(() => route.params.id, (newProductId) => {
         productItem.value = getProduct(newProductId);
         console.log(productItem);
     });
 
       
-      return { productItem, productsData, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
+      return { productItem, productsData, count, isModalActive, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
 
    },
 }
