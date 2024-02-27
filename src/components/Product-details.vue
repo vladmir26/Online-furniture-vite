@@ -140,20 +140,21 @@ export default {
           
     }
 
+    const initProductValue = () => {
+      getProduct(route.params.id).then((product) => {
+           productItem.value = product
+        });
+    }
+
 
     const handleShowModal = () => { };
-
-    onMounted(() => { 
-      getProduct(route.params.id).then((product) => {
-          productItem.value = product
+      onMounted(() => { 
+        initProductValue();
+        const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal;
       });
-      const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal = handleShowModal;
-      console.log(productItem.value);
-    });
 
-    watch(() => route.params.id, (newProductId) => {
-        productItem.value = getProduct(newProductId);
-        console.log(productItem);
+      watch(() => route.params.id, () => {
+        initProductValue();
     });
 
       
