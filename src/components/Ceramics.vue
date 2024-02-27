@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 const products = ref(productsData);
 </script>
+
 <template>
 <section class="ceramics container">
         <div class="container__white-wrapper">
