@@ -18,7 +18,6 @@
 export function addMockDataToProduct(mockProduct, products) {
   
     mockProduct.forEach(product => {
-      console.log('++++++')
       const productTemplate = {
         "id": product.id,
         "mock": true,
