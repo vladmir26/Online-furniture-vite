@@ -1,13 +1,23 @@
 //@ts-nocheck
+
 /**
- * 
- * @param {*} mockProduct 
+ * @typedef mockProduct
+ * @prop {number} id
+ * @prop {string} title
+ * @prop {number} price
+ * @prop {string} brand
+ * @prop {string} category
+ * @prop {string} images
+ */
+
+/**
+ * Add mock data to main product from API
+ * @param {mockProduct} mockProduct 
  * @param {*} products 
  */
 export function addMockDataToProduct(mockProduct, products) {
   
     mockProduct.forEach(product => {
-      console.log('++++++')
       const productTemplate = {
         "id": product.id,
         "mock": true,

@@ -74,12 +74,34 @@ export default {
     const isModalActive = ref(false);
     const countStore = useCountStore();
     const productItem = ref('');
-    const limitedCounter = computed(() => Math.max(count.value, 1));
+    const limitedCounter = computed(() => Math.max(count.value, 1), {
+      onTrack(e) {
+        // срабатывает, когда count.value отслеживается как зависимость
+        debugger
+      },
+      onTrigger(e) {
+        // срабатывает при изменении значения count.value
+        debugger
+      }
+    });
 
     const addPlus = () => { count.value += 1; };
-    const addMinus = () => { count.value -= 1; count.value = limitedCounter.value; };
-    const addCart = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.showModal(); countStore.addCount(count.value); countStore.animationActive('6000'); };
-    const closeDialog = () => { const dialogBox = document.getElementById('dialogBox'); dialogBox.close(); };
+    const addMinus = () => { 
+      count.value -= 1; 
+      count.value = limitedCounter.value;
+    };
+    const addCart = () => { 
+      const dialogBox = document.getElementById('dialogBox'); 
+      dialogBox.showModal(); 
+      countStore.addCount(count.value); 
+      countStore.animationActive('6000'); 
+  };
+
+    const closeDialog = () => { 
+      const dialogBox = document.getElementById('dialogBox'); 
+      dialogBox.close(); 
+    };
+
     //const productId = route.params.id;
     const loadingProductItem = async (id) => {
       return await fetch(`https://dummyjson.com/products/${id}`)
@@ -90,10 +112,11 @@ export default {
         })
         .catch(console.log);
     };
-    console.log(route.params);
+    
+
     const getProduct = async(productId) => {
       const idParams = productId.split('-');
-         console.log(productId);
+         console.log(idParams);
           if (idParams.length === 1) {
             return await loadingProductItem(idParams[0]).then(
               (product) => { 
@@ -135,7 +158,7 @@ export default {
     });
 
       
-      return { productItem, productsData, count, isModalActive, limitedCounter, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
+      return { productItem, productsData, count, isModalActive, addPlus, addMinus, addCart, closeDialog, ...mapStores(useCountStore) };
 
    },
 }
