@@ -1,4 +1,5 @@
 <script setup>
+//@ts-nocheck
 import { computed, onBeforeMount, onMounted, onUpdated, reactive, ref } from "vue";
 
 const props = defineProps({
@@ -266,7 +267,7 @@ function createFilters(){
   
     &__list-categories {
       margin-bottom: 48px;
-      max-height: 130px;
+      //max-height: 130px;
     }
   
     &__list-categories--scroll {
@@ -274,7 +275,7 @@ function createFilters(){
     }
   
     &__button-first {
-      // display: none;
+      display: none;
     }
   
     &__button-wrapper {
