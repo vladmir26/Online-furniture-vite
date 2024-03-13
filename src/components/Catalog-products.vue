@@ -1,8 +1,10 @@
 <script setup>
+
 //@ts-nocheck
 import ProductFilters from './Product-filters.vue';
 import productsData from '../mock/products.json'
 import { addMockDataToProduct } from '../hint/match';
+import { requestProducts, requestProductNext } from '../hint/requests'
 import { ref, computed, onMounted, onUpdated, onBeforeMount } from 'vue';
 
 
@@ -23,15 +25,19 @@ const isCategoriesScrollHidden = ref(false);
 
 console.log('Catalog-products setup')
 console.log('products', products.value.length)
-fetch('https://dummyjson.com/products')
-    .then((res) => res.json())
-    .then((res) => {
-      console.log('fetch request from Catalog-product')
-      products.value = res.products;
-      addMockDataToProduct(productsMock.value, products.value)
-      isProductLoaded.value = true
-    })
-    .catch(console.log);
+
+initProducts()
+
+
+// fetch('https://dummyjson.com/products')
+//     .then((res) => res.json())
+//     .then((res) => {
+//       console.log('fetch request from Catalog-product')
+//       products.value = res.products;
+//       addMockDataToProduct(productsMock.value, products.value)
+//       isProductLoaded.value = true
+//     })
+//     .catch(console.log);
 
 
 onBeforeMount(() => {
@@ -92,21 +98,27 @@ const productsSorted = computed(() => {
 });
 
 
-const loadingProducts = () => {
-  fetch(`https://dummyjson.com/products?limit=${limit.value}&skip=${counter.value * limit.value}`)
-    .then((res) => res.json())
-    .then((res) => {
-      console.log('fetch request from Loading more')
-      counter.value += 1;
-      products.value = products.value.concat(res.products);
-      isCategoriesScrollHidden.value = true;
-      if (res.limit < limit.value) {
-        isLoadMoreHidden.value = true;
-      }
-    })
-    .catch(console.log);
+const loadingProducts = async() => {
+  const nextResult = await requestProductNext(counter.value, limit.value)
+  counter.value += 1;
+  products.value = products.value.concat(nextResult.products);
+  isCategoriesScrollHidden.value = true;
+  if (nextResult.limit < limit.value) {
+    isLoadMoreHidden.value = true;
+  }
+  // fetch(`https://dummyjson.com/products?limit=${limit.value}&skip=${counter.value * limit.value}`)
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     console.log('fetch request from Loading more')
+  //     counter.value += 1;
+  //     products.value = products.value.concat(res.products);
+  //     isCategoriesScrollHidden.value = true;
+  //     if (res.limit < limit.value) {
+  //       isLoadMoreHidden.value = true;
+  //     }
+  //   })
+  //   .catch(console.log);
 };
-
 
 const setRouter = (product) => {
   const prefix = (product.mock) ? 'mock-' : ''
@@ -114,6 +126,12 @@ const setRouter = (product) => {
     name: 'product',
     params: {id: `${prefix}${product.id}`}
   }
+}
+
+async function initProducts() {
+  products.value = await requestProducts()
+  addMockDataToProduct(productsMock.value, products.value)
+  isProductLoaded.value = true
 }
 
 </script>

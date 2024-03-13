@@ -1,4 +1,4 @@
-interface IMockProduct {
+export interface IMockProduct {
     id: number | string;
     title: string;
     price: number;
