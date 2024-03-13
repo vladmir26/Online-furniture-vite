@@ -1,141 +1,232 @@
 <script setup>
 //@ts-nocheck
-const sorting = ref('popular');
+import { computed, onBeforeMount, onMounted, onUpdated, reactive, ref } from "vue";
+
+const props = defineProps({
+  products: Array
+})
+
+const sortingModule = defineModel('sorting', { default: 'popular' })
+const optionsModule = defineModel('options', { default: [] }  // price.1, categories.name...
+)
+
+const options = reactive({
+  categories: [],
+  brands: [],
+  maxPrice: 0
+})
+
+console.log('Product-filter setup')
+console.log('props', props.products.length)
+createFilters()
+
+
+onBeforeMount(() => {
+  console.log('Product-filter onBeforeMounted')
+})
+
+onMounted(() => {
+  console.log('Product-filter onMounted')
+})
+
+onUpdated(() => {
+  console.log('Product-filter onUpdated')
+})
+
+const isFiltersAccordionHidden = ref(false);
+
+const oneThirdPrice = computed(() => Math.ceil(options.maxPrice / 3));
+
+const priceRange = computed(() => [
+  {
+    id: 1,
+    name: `0 - ${oneThirdPrice.value}`,
+    minValue: 0,
+    maxValue: oneThirdPrice.value,
+  },
+  {
+    id: 2,
+    name: `${oneThirdPrice.value + 1} - ${oneThirdPrice.value * 2}`,
+    minValue: oneThirdPrice.value + 1,
+    maxValue: oneThirdPrice.value * 2,
+  },
+  {
+    id: 3,
+    name: `${oneThirdPrice.value * 2 + 1} - ${options.maxPrice}`,
+    minValue: oneThirdPrice.value * 2 + 1,
+    maxValue: options.maxPrice,
+  },
+]);
+
+const filtersAccordionStatus = ref({
+  categories: false,
+  price: false,
+  brands: false,
+});
+
+const appearanceAccordion = () => {
+  console.log("appearanceAccordion --------")
+  isFiltersAccordionHidden.value = !isFiltersAccordionHidden.value;
+};
+
+
+const filtersAccordion = (event) => {
+  console.log(event.target.innerText, "--------")
+  const filterName = event.target.innerText.toLowerCase();
+  filtersAccordionStatus.value[filterName] = !filtersAccordionStatus.value[filterName];
+};
+
+function createFilters(){
+  console.log('CreateFilters')
+  props.products.forEach((product) => {
+    if(!options.categories.length || !options.categories.includes(product.category)) {
+      options.categories.push(product.category)
+    }
+
+    if(!options.brands.length || !options.brands.includes(product.brand)) {
+      options.brands.push(product.brand)
+    }
+    options.maxPrice = product.price > options.maxPrice ? product.price : options.maxPrice;
+  });
+  
+  console.log('CreateFilters options', options)
+};
+
 </script>
 
 <template>
-    <aside
-      id="catalog"
-      class="filters"
-    >
-      <div class="filters__wrapper">
-        <h2 class="visially-hidden">
-          Filters
-        </h2>
-        <div class="filters__button-wrapper">
-          <button
-            class="filters__button-first"
-            @click="appearanceAccordion"
-          >
-            Filters
-          </button>
-          <select
-            v-model="sorting"
-            class="filters__button-second"
-            name="sorting"
-          >
-            <option value="popular">
-              Popular
-            </option>
-            <option value="cheap">
-              Cheapest first
-            </option>
-            <option value="expensive">
-              Expensive first
-            </option>
-          </select>
-        </div>
-       <div
-          :class="{ 'filters__accordion-wrapper': true,
-                    'active-accordion': isFiltersAccordionHidden }"
+  <aside
+    id="catalog"
+    class="filters"
+  >
+    <div class="filters__wrapper">
+      <h2 class="visially-hidden">
+        Filters
+      </h2>
+      <div class="filters__button-wrapper">
+        <button
+          class="filters__button-first"
+          @click="appearanceAccordion"
         >
-          <h3 class="filters__title">
-            <button
-              :class="{ 'accordion': true, 'active': filtersAccordionStatus.categories }"
-              @click="filtersAccordion"
-            >
-              Categories
-            </button>
-          </h3>
-          <ul
-            :class="{'panel filters__list-categories': true,
-                     'active': filtersAccordionStatus.categories,
-                     'filters__list-categories--scroll panel--scroll': isCategoriesScrollHidden,
-            }"
-          >
-            <li
-              v-for="item in categories"
-              :key="item"
-              class="filters__item"
-            >
-              <input
-                :id="item"
-                class="filters__checkbox"
-                type="checkbox"
-                name="categories"
-                :value="item"
-                @change="filterItems"
-              >
-              <label
-                class="filters__label"
-                :for="item"
-              >{{ item.charAt(0).toUpperCase() + item.slice(1) }}</label>
-            </li>
-          </ul>
-          <h3 class="filters__title">
-            <button
-              :class="{ 'accordion': true, 'active': filtersAccordionStatus.price }"
-              @click="filtersAccordion"
-            >
-              Price
-            </button>
-          </h3>
-          <ul :class="{ 'panel filters__list': true, 'active': filtersAccordionStatus.price }">
-            <li
-              v-for="item in priceRange"
-              :key="item"
-              class="filters__item"
-            >
-              <input
-                :id="item.id"
-                class="filters__checkbox"
-                type="checkbox"
-                name="price"
-                :value="item.id"
-                @change="filterItems"
-              >
-              <label
-                class="filters__label"
-                :for="item.id"
-              >{{ item.name }}</label>
-            </li>
-          </ul>
-          <h3 class="filters__title">
-            <button
-              :class="{ 'accordion': true, 'active': filtersAccordionStatus.brands }"
-              @click="filtersAccordion"
-            >
-              Brands
-            </button>
-          </h3>
-          <ul
-            :class="{
-              'panel panel--scroll filters__list--scroll': true,
-              'active': filtersAccordionStatus.brands
-            }"
-          >
-            <li
-              v-for="item in brands"
-              :key="item"
-              class="filters__item"
-            >
-              <input
-                :id="item"
-                class="filters__checkbox"
-                type="checkbox"
-                name="brands"
-                :value="item"
-                @change="filterItems"
-              >
-              <label
-                class="filters__label"
-                :for="item"
-              >{{ item }}</label>
-            </li>
-          </ul>
-        </div>-->
+          Filters
+        </button>
+        <select
+          v-model="sortingModule"
+          class="filters__button-second"
+          name="sorting"
+        >
+          <option value="popular">
+            Popular
+          </option>
+          <option value="cheap">
+            Cheapest first
+          </option>
+          <option value="expensive">
+            Expensive first
+          </option>
+        </select>
       </div>
-    </aside>
+      <div
+        :class="{ 'filters__accordion-wrapper': true,
+                  'active-accordion': isFiltersAccordionHidden }"
+      >
+        <h3 class="filters__title">
+          <button
+            :class="{ 'accordion': true, 'active': filtersAccordionStatus.categories }"
+            @click="filtersAccordion"
+          >
+            Categories
+          </button>
+        </h3>
+        <ul
+          :class="{'panel filters__list-categories': true,
+                  'active': filtersAccordionStatus.categories,
+                  'filters__list-categories--scroll panel--scroll': isCategoriesScrollHidden,
+          }"
+        >
+          <li
+            v-for="item in options.categories"
+            :key="item"
+            class="filters__item"
+          >
+            <input
+            v-model="optionsModule"
+              :id="item"
+              class="filters__checkbox"
+              type="checkbox"
+              :name="'categories.' + item"
+              :value="'categories.' + item"
+            >
+            <label
+              class="filters__label"
+              :for="item"
+            >{{ item.charAt(0).toUpperCase() + item.slice(1) }}</label>
+          </li>
+        </ul>
+        <h3 class="filters__title">
+          <button
+            :class="{ 'accordion': true, 'active': filtersAccordionStatus.price }"
+            @click="filtersAccordion"
+          >
+            Price
+          </button>
+        </h3>
+        <ul :class="{ 'panel filters__list': true, 'active': filtersAccordionStatus.price }">
+          <li
+            v-for="item in priceRange"
+            :key="item"
+            class="filters__item"
+          >
+            <input
+              v-model="optionsModule"
+              :id="item.id"
+              class="filters__checkbox"
+              type="checkbox"
+              :name="'price.'  + item.id"
+              :value="'price.' + item.id"
+            >
+            <label
+              class="filters__label"
+              :for="item.id"
+            >{{ item.name }}</label>
+          </li>
+        </ul>
+        <h3 class="filters__title">
+          <button
+            :class="{ 'accordion': true, 'active': filtersAccordionStatus.brands }"
+            @click="filtersAccordion"
+          >
+            Brands
+          </button>
+        </h3>
+        <ul
+          :class="{
+            'panel panel--scroll filters__list--scroll': true,
+            'active': filtersAccordionStatus.brands
+          }"
+        >
+          <li
+            v-for="item in options.brands"
+            :key="item"
+            class="filters__item"
+          >
+            <input
+            v-model="optionsModule"
+              :id="item"
+              class="filters__checkbox"
+              type="checkbox"
+              :name="'brands.' + item"
+              :value="'brands.' + item"
+            >
+            <label
+              class="filters__label"
+              :for="item"
+            >{{ item }}</label>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
 </template>
 
 <style scoped lang="scss">
@@ -176,7 +267,7 @@ const sorting = ref('popular');
   
     &__list-categories {
       margin-bottom: 48px;
-      max-height: 130px;
+      //max-height: 130px;
     }
   
     &__list-categories--scroll {
